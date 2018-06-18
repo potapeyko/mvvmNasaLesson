@@ -1,0 +1,79 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        applicationId "ru.gdgkazan.pictureofdaymvvm"
+        minSdkVersion 17
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "API_ENDPOINT", '"https://api.nasa.gov/"'
+        buildConfigField "String", "API_KEY", '"x5HglF0nTdZ2eRBN0pG1xXqjgMRnFPN0VbRyqvhj"'
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.all { jvmArgs '-noverify' }
+    }
+}
+
+apply from: '../versions.gradle'
+
+dependencies {
+    implementation "com.android.support:support-v4:$supportVersion"
+    implementation "com.android.support:support-v13:$supportVersion"
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+    implementation "com.android.support:design:$supportVersion"
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    implementation "io.reactivex.rxjava2:rxjava:2.1.14"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
+    implementation "ru.arturvasilov:rx-loader:$rxLoaderVersion"
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+
+
+
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$picassoDownloaderVersion"
+
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+    testCompile "org.powermock:powermock-api-mockito:$powerMockVersion"
+    testCompile "org.powermock:powermock-module-junit4:2.0.0-beta.5"
+    testCompile("org.robolectric:robolectric:3.8") {
+        exclude group: 'commons-logging', module: 'commons-logging'
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    androidTestCompile "junit:junit:$junitVersion"
+    androidTestCompile "org.mockito:mockito-core:$mockitoVersion"
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+
